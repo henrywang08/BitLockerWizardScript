@@ -7,30 +7,30 @@ Function LogMessage($msg)
     "$Timestamp $msg" |     Out-File -Append -FilePath $LogFile 
 }
 
-$Message = "Start bitlocker detection on C: drive"
-LogMessage($Message)
+#$Message = "Start bitlocker detection on C: drive"
+#LogMessage($Message)
 
 $BLDriveC = Get-BitLockerVolume c:
 
-   $Message = "Mountpoint $($BLDriveC.MountPoint) is $($BLDriveC.VolumeStatus)"
-    LogMessage($Message)
+#   $Message = "Mountpoint $($BLDriveC.MountPoint) is $($BLDriveC.VolumeStatus)"
+#    LogMessage($Message)
 
 
 If ($BLDriveC.VolumeStatus -eq "FullyDecrypted")
 {
    
-   $Message = "Bitlocker not enabled on C:!"
-    LogMessage($Message)
+ #  $Message = "Bitlocker not enabled on C:!"
+ #   LogMessage($Message)
 
    #  Write-Host "False"
-    return 1
+     exit 
 }
 else
 {
-   $Message = "Bitlocker enabled on C:"
-    LogMessage($Message)
+#   $Message = "Bitlocker enabled on C:"
+#    LogMessage($Message)
 
     Write-host "True"
-    return 0
+    exit 0
 }
 

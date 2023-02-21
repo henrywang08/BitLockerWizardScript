@@ -1,0 +1,1 @@
+Powershell.exe -NoProfile -ExecutionPolicy ByPass -File .\BitLockerWizardforUser.ps1
