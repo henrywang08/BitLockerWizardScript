@@ -1,0 +1,1 @@
+powershell.exe -executionpolicy bypass -file "c:\programdata\tools\Start-BLWizard.ps1"

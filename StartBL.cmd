@@ -1,0 +1,1 @@
+c:\programdata\tools\serviceui.exe  -process:explorer.exe %windir%\system32\BitLockerWizardElev.exe "c: t"

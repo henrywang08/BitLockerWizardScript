@@ -16,6 +16,7 @@ $LogFile = "c:\windows\temp\bldetect.log"
 
 # ServiceUI.exe and the script needs to be copied into the folder
 $ServiceUIPath = "c:\ProgramData\tools\"
+$ServiceUIFile = "serviceui.exe"
 $StartBitLockerBatchFile = "StartBL.cmd"
 $SetTPMPinBatchFile = "SetPin.cmd"
 
@@ -78,9 +79,19 @@ If ($BLDriveC.VolumeStatus -ne "FullyDecrypted")
             $Message = "Bitlocker with Tpm. Need to setup TPMPin"
             LogMessage($Message)
             
-            Start-Process -FilePath $ServiceUIPath+$SetTPMPinBatchFile `
-                    -Wait
-        
+         #   $SetPincmd = $ServiceUIPath+$SetTPMPinBatchFile
+#	    $ServiceUIcmd = $ServiceUIPath+$ServiceUIFile
+#            $Auguments = " -process:explorer.exe c:\windows\system32\BitLockerWizardElev.exe `"c: i`"" 		
+
+	    $ServiceUIcmd = "c:\windows\system32\cmd.exe"
+            $Auguments = "/c c:\programdata\tools\setpin.cmd" 		
+
+            Start-Process -FilePath $ServiceUIcmd `
+		    -ArgumentList $Auguments `
+                    -Wait 
+
+
+	    
             $BLDriveCAgain = Get-BitLockerVolume -MountPoint c:
         
             $Message = "BitLocker Wizard Result: Mountpoint $($BLDriveCAgain.MountPoint) is $($BLDriveCAgain.VolumeStatus)"
@@ -122,7 +133,7 @@ if ($BLDriveC.VolumeStatus -eq "FullyDecrypted")
     $Message = "Start BitLocker Wizard"
     LogMessage($Message)
     
-    Start-Process -FilePath $ServiceUIPath+$StartBitLockerBatchFile `
+    Start-Process -FilePath "$ServiceUIPath+$StartBitLockerBatchFile" `
         -Wait
     
     $BLDriveCAgain = Get-BitLockerVolume -MountPoint c:
